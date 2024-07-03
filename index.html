@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React</title>
+
+    <!-- Carrega o React, React Dom e Babel -->
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+<!-- Don't use this in production: -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        
+        const Button = () => {
+            const [total, setTotal] = React.useState(0);
+            return <button onClick={() => setTotal(total + 1)}>Adicionar {total}</button>
+        }
+
+        const MainNav = () => {
+            return <nav>
+                <a href="#">Link 1</a>
+                <Button/>
+                </nav>
+        }
+
+        const Produtos = () => {
+            const produto1 = 'Camisa'
+            const produto2 = 'Bermuda'
+            return <div>
+                 <button>{produto1}</button>
+                 <button>{produto2}</button>
+                </div>
+        }
+
+        const Compras = () => {
+
+            const [contar, setContar] = React.useState(5)
+
+            function handleClick(){
+                setContar(contar + 1);
+            }
+
+            return <dir>
+                <button onClick={handleClick} >Comprar: {contar}</button>
+                <p>Total: {contar}</p>
+                <p>Presço: {contar * 250}</p>
+                
+                </dir>
+        }
+
+        const App = () =>{
+            return <div>
+                <Produtos/>
+                <MainNav/>
+                <Compras />
+                </div>
+        }
+
+        const container= document.getElementById('root')
+        const root = ReactDOM.createRoot(container);
+        root.render(<App/>)
+
+    </script>
+
+    
+</body>
+</html>
