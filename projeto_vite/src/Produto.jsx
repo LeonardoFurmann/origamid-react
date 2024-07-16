@@ -1,14 +1,13 @@
 import React from 'react'
 
-const Produto = ({nome, propriedades}) => {
+
+ const Produto =  ({dados}) => {
+
   return (
-    <div style={{width: "400px", border: "1px solid black"}}>
-        <h4>{nome}</h4>
-        <ul>
-            {propriedades.map((propriedade) => 
-                <li key={propriedade}>{propriedade}</li>
-            )}
-        </ul>
+    <div>
+      <h1>{dados.nome}</h1>
+      <p>R$ {dados.preco}</p>
+      <img src={dados.fotos[0].src} alt={dados.fotos[0].titulo} />
     </div>
   )
 }
