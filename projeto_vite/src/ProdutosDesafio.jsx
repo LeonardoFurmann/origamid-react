@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Produto from './Produto'
+import {UserContext} from './UserContext'
 
 const base_url = 'https://ranekapi.origamid.dev/json/api/produto/'
 
@@ -13,6 +14,12 @@ const ProdutosDesafio = () => {
   const [dados, setDados] = useState(null)
   const [carregando ,setCarregando] = useState(null)
 
+  const dadosProdutos = React.useContext(UserContext)
+  if(dadosProdutos.produto === null) {
+    return null
+  }
+  console.log(dadosProdutos)
+
   async function handleClick(event) {
     setCarregando(true)
     const endoint = event.target.innerText
@@ -24,6 +31,8 @@ const ProdutosDesafio = () => {
 
   return (
     <div>
+      <h3>{dadosProdutos.produto[0].nome}</h3>
+      <button onClick={dadosProdutos.limpaDados}>Limpar Dados</button>
       <div style={{ display: 'flex', gap: '20px' }}>
         <button onClick={handleClick}>Tablet</button>
         <button onClick={handleClick}>Smartphone</button>
