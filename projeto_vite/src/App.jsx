@@ -2,6 +2,7 @@ import React from 'react'
 import Home from './Home.jsx'
 import ProdutosDesafio from './ProdutosDesafio.jsx'
 import {UserStorage} from './UserContext.jsx'
+import useLocalStorage from './hooks/useLocalStorage.jsx'
 
 const Titulo = ({texto, children}) => {
   return <h1>{texto}, {children}</h1>
@@ -11,6 +12,7 @@ const App = () => {
 
   const { pathname } = window.location;
 
+  const [produto, setProduto] = useLocalStorage('produto', '')
   return (
     <UserStorage>
       <ul>
