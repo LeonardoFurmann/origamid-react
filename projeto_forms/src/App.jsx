@@ -19,6 +19,8 @@ function App() {
   const [cores, setCores] = useState([]);
   const [produto, setProduto] = useState([]);
   const [nome, setNome] = useState('')
+  const [cep, setCep] = useState('')
+  const [erro, setErro] = useState('')
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -50,6 +52,24 @@ function App() {
   }
 
   const coresArray = ['azul', 'roxo', 'laranja', 'verde', 'vermelho', 'cinza'];
+
+  function validateCep(value){
+      if (value.length === 0) {
+        setErro('Preencha esse valor')
+        return false
+      } else if (!/^\d{5}-?\d{3}$/.test(value)){
+        setErro('Preecha um CEP válido')
+        return false
+      } else {
+        setErro(null)
+        return true;
+      }
+  }
+
+  function handleBlur({target}){
+    validateCep(target.value)
+
+  }
 
   return (
     <>
@@ -92,7 +112,9 @@ function App() {
           ))}
         </ul>
         <Input label="Nome" id="nome" value={nome} setValue={setNome} required/>
+        <Input label="CEP" id="cep" value={cep} setValue={setCep} required type="text" placeholder="000000-000" onBlur={handleBlur}/>
         <Select options={['Celular', 'TV']} value={produto} setValue={setProduto} />
+        {erro && <p>{erro}</p>}
       </form>
     </>
 
