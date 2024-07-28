@@ -1,120 +1,80 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Input from './input.jsx';
 import Select from './select.jsx';
+import Radio from './radio.jsx';
+
+const perguntas = [
+  {
+    pergunta: 'Qual método é utilizado para criar componentes?',
+    options: [
+      'React.makeComponent()',
+      'React.createComponent()',
+      'React.createElement()',
+    ],
+    resposta: 'React.createElement()',
+    id: 'p1',
+  },
+  {
+    pergunta: 'Como importamos um componente externo?',
+    options: [
+      'import Component from "./Component"',
+      'require("./Component")',
+      'import "./Component"',
+    ],
+    resposta: 'import Component from "./Component"',
+    id: 'p2',
+  },
+  {
+    pergunta: 'Qual hook não é nativo?',
+    options: ['useEffect()', 'useFetch()', 'useCallback()'],
+    resposta: 'useFetch()',
+    id: 'p3',
+  },
+  {
+    pergunta: 'Qual palavra deve ser utilizada para criarmos um hook?',
+    options: ['set', 'get', 'use'],
+    resposta: 'use',
+    id: 'p4',
+  },
+];
+
 
 function App() {
-  const [form, setForm] = useState({
-    nome: '',
-    email: '',
-    senha: '',
-    cep: '',
-    rua: '',
-    numero: '',
-    estado: '',
-    bairro: '',
-    cidade: '',
-  })
 
-  const [response, setResponse] = useState(null)
-  const [cores, setCores] = useState([]);
-  const [produto, setProduto] = useState([]);
-  const [nome, setNome] = useState('')
-  const [cep, setCep] = useState('')
-  const [erro, setErro] = useState('')
+  const [pergunta, setPergunta] = useState('');
+  const [indice, setIndice] = useState(0);
+  const [count, setCount] = useState(0)
 
-  async function handleSubmit(event) {
+  // useEffect(() => {
+  //   setPergunta(perguntas[indice])
+  // }, [indice])
+
+  function handleSubmit(event) {
     event.preventDefault();
-    const response = await fetch('https://ranekapi.origamid.dev/json/api/usuario', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(form),
-    });
-    setResponse(response)
-  }
-
-  function handleChange({ target }) {
-    const { id, value } = target
-    setForm({ ...form, [id]: value })
-  }
-
-  function handleChangeCheckbox({ target }) {
-    if (target.checked) {
-      setCores([...cores, target.value]);
-    } else {
-      setCores(cores.filter((cor) => cor !== target.value));
+    setPergunta(perguntas[indice])
+    if (pergunta === perguntas[indice].resposta) {
+      setCount(count + 1)
     }
-  }
-
-  function handleChecked(cor) {
-    return cores.includes(cor);
-  }
-
-  const coresArray = ['azul', 'roxo', 'laranja', 'verde', 'vermelho', 'cinza'];
-
-  function validateCep(value){
-      if (value.length === 0) {
-        setErro('Preencha esse valor')
-        return false
-      } else if (!/^\d{5}-?\d{3}$/.test(value)){
-        setErro('Preecha um CEP válido')
-        return false
-      } else {
-        setErro(null)
-        return true;
-      }
-  }
-
-  function handleBlur({target}){
-    validateCep(target.value)
+    setIndice(indice + 1)
 
   }
+
+
 
   return (
     <>
-      {/* <form onSubmit={handleSubmit}>
-        <label htmlFor="nome">Nome</label>
-        <input id='nome' name='nome' type="text" value={form.nome} onChange={handleChange} />
-        <label htmlFor="email">Email</label>
-        <input id='email' name='email' type="text" value={form.email} onChange={handleChange} />
-        <label htmlFor="senha">Senha</label>
-        <input id='senha' name='senha' type="password" value={form.senha} onChange={handleChange} />
-        <label htmlFor="cep">CEP</label>
-        <input id='cep' name='cep' type="number" value={form.cep} onChange={handleChange} />
-        <label htmlFor="rua">Rua</label>
-        <input id='rua' name='rua' type="text" value={form.rua} onChange={handleChange} />
-        <label htmlFor="numero">Número</label>
-        <input id='numero' name='numero' type="number" value={form.numero} onChange={handleChange} />
-        <label htmlFor="bairro">Bairro</label>
-        <input id='bairro' name='bairro' type="text" value={form.bairro} onChange={handleChange} />
-        <label htmlFor="cidade">Cidade</label>
-        <input id='cidade' name='cidade' type="text" value={form.cidade} onChange={handleChange} />
-        <label htmlFor="estado">Estado</label>
-        <input id='estado' name='estado' type="text" value={form.estado} onChange={handleChange} />
-        <button>Enviar</button>
-        {response && response.ok && <p>{response}</p>}
-      </form> */}
-      <form>
-        {coresArray.map((corArray) => (
-          <label key={corArray} style={{textTransform: 'capitalize'}}>
-            <input
-              type="checkbox"
-              value={corArray}
-              checked={handleChecked(corArray)}
-              onChange={handleChangeCheckbox} />
-            {corArray}
-          </label>
-        ))}
-        <ul>
-          {cores.map((cor) => (
-            <li key={cor}>{cor}</li>
-          ))}
-        </ul>
-        <Input label="Nome" id="nome" value={nome} setValue={setNome} required/>
-        <Input label="CEP" id="cep" value={cep} setValue={setCep} required type="text" placeholder="000000-000" onBlur={handleBlur}/>
-        <Select options={['Celular', 'TV']} value={produto} setValue={setProduto} />
-        {erro && <p>{erro}</p>}
+      <form onSubmit={() => handleSubmit(event)}>
+        {perguntas.length > indice ?
+          <>
+            <h3>{perguntas[indice].pergunta}</h3>
+            <Radio
+              options={perguntas[indice].options}
+              value={pergunta}
+              setValue={setPergunta} />
+            <button>Próxima</button>
+          </>
+          : <p>Você acertou {count} de {perguntas.length}</p>
+        }
       </form>
     </>
 
