@@ -1,49 +1,32 @@
-import styled from 'styled-components'
-import Produto from "./Components/Produto"
-import { useState } from 'react'
 
-const ProdutosContainer = styled.div`
-    display: flex;
-    color: green;
-    flex-direction: column;
-`
-
-const Titulo = styled.h1`
-  font-size: 2rem;
-  color: tomato;
-`
-
-const Paragrafo = styled.p`
-  font-size: 1rem;
-  color: ${({ cor }) => cor};
-  background: hsl(${Math.random() * 360}, 100%, 50%);
-`
-
-const Button = styled.button`
-  background: ${({ ativo }) => ativo ? '#000' : '#fff'};
-  font-size: 1rem;
-  color: ${({ ativo }) => ativo ? '#fff' : '#000'};
-  &:hover{
-    background: tomato;
-  }
-`
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import Home from './Components/Home'
+import Sobre from './Components/Sobre'
+import Erro404 from './Components/Erro404'
+import Header from './Components/Header'
+import Produto from './Components/Produto'
+import ProdutoDescricao from './Components/ProdutoDescricao';
+import ProdutoAvalicao from './Components/ProdutoAvalicao';
+import ProdutoCustomizado from './Components/ProdutoCustomizado';
 
 function App() {
-
-  const [ativo, setAtivo] = useState(false)
-
-  function handleClick(){
-    setAtivo(!ativo)
-  }
-
   return (
     <>
-      <ProdutosContainer>
-        <Produto />
-        <Titulo>Teste</Titulo>
-        <Paragrafo  cor="#green">Teste</Paragrafo>
-        <Button ativo={ativo} onClick={handleClick}>Ativar</Button>
-      </ProdutosContainer>
+
+      <BrowserRouter>
+          <Header></Header>
+         <Routes>
+           <Route path='/' element = {<Home/>}></Route>
+           <Route path='sobre' element = {<Sobre/>}></Route>
+           <Route path='*' element = {<Erro404/>}></Route>
+           <Route path='produto/:id/*' element = {<Produto/>}>
+                <Route path='' element={<ProdutoDescricao />}></Route>
+                <Route path='avaliacao' element={<ProdutoAvalicao />}></Route>
+                <Route path='customizado' element={<ProdutoCustomizado />}></Route>
+           </Route>
+         </Routes>
+      
+      </BrowserRouter>
     </>
   )
 }
