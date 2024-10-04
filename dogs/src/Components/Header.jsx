@@ -5,16 +5,15 @@ import Dogs from '../Assets/dogs.svg?react';
 
 const Header = () => {
   return (
-    <div className={styles.header}>
-
-      <nav className='container'>
-        <Link to='/' aria-label='Dogs - Home'>
+    <header className={styles.header}>
+      <nav className={`${styles.nav} container`}>
+        <Link className={styles.logo} to='/' aria-label='Dogs - Home'>
           <Dogs />
         </Link>
-        <Link to='/login'>Login/Criar</Link>
+        <Link className={styles.login} to='/login'>Login/Criar</Link>
       </nav>
 
-    </div>
+    </header>
   )
 }
 
