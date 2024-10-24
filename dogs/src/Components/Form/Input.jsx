@@ -3,7 +3,7 @@ import styles from './Input.module.css'
 
 const Input = ({label, type, name, value, onChange, error, onBlur}) => {
   return (
-    <div>
+    <div className={styles.wrapper}>
       <label htmlFor={name}>{label}</label>
       <input 
         id={name} 
