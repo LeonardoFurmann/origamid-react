@@ -1,7 +1,7 @@
 import React from 'react';
 import Input from '../Form/Input';
 import Button from '../Form/Button';
-import Error from '../Helper/Error';
+import Error from '../Helper/Erro';
 import useForm from '../../Hooks/useForm';
 import { USER_POST } from '../../api';
 import { UserContext } from '../../UserContext';
