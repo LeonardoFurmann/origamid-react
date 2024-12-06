@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { UserStorage } from './UserContext';
 import User from './Components/User/User';
 import ProtectedRoute from './Components/Helper/ProtectedRoute';
+import UserProfile from './Components/User/UserProfile';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
             <Route path='login/*' element={<Login />} />
             <Route path='conta/*' element={<ProtectedRoute><User/></ProtectedRoute>} />
             <Route path='foto/:id' element={<ProtectedRoute><Photo/></ProtectedRoute>} />
+            <Route path='perfil/:user' element={<ProtectedRoute><UserProfile/></ProtectedRoute>} />
           </Routes>
           <Footer />
         </UserStorage>
