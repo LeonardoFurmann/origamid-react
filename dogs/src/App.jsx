@@ -10,6 +10,7 @@ import { UserStorage } from './UserContext';
 import User from './Components/User/User';
 import ProtectedRoute from './Components/Helper/ProtectedRoute';
 import UserProfile from './Components/User/UserProfile';
+import NotFound from './Components/NotFound';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
             <Route path='conta/*' element={<ProtectedRoute><User/></ProtectedRoute>} />
             <Route path='foto/:id' element={<ProtectedRoute><Photo/></ProtectedRoute>} />
             <Route path='perfil/:user' element={<ProtectedRoute><UserProfile/></ProtectedRoute>} />
+            <Route path='*' element={<NotFound />}/>
           </Routes>
           <Footer />
         </UserStorage>
