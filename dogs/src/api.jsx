@@ -135,7 +135,7 @@ export function PASSWORD_RESET(body) {
   };
 }
 
-export function STATS_GE() {
+export function STATS_GET(body) {
   return {
     url: `${API_URL}/api/stats`,
     options: {
